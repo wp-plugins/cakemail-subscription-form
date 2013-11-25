@@ -88,7 +88,7 @@ jQuery('.submit_cakemail_subscribe').on('click', function(e) {
   });
 
   jQuery.ajax({
-    url : "/wp-content/plugins/cakemailsubscriptionwidget/cakemailsubscriptionwidget_subscribe.php",
+    url : "/wp-content/plugins/cakemail-subscription-form/cakemailsubscriptionform_subscribe.php",
     method : 'post',
     data : data,
     success : function ( jqXHR, status_text ){

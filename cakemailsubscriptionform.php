@@ -17,12 +17,12 @@ require_once ( dirname(__FILE__) . '/inc/cakeapi.php' );
 /**
  * Adds Cakemail widget.
  */
-class CakeMailSubscriptionWidget extends WP_Widget {
+class CakeMailSubscriptionForm extends WP_Widget {
 
     public function __construct($number = null) {
         load_plugin_textdomain( 'cakemail-subscription-widget', false, 'cakemail-subscription-widget/locale' );
 
-        $baseId = 'cakemailsubscriptionwidget';
+        $baseId = 'cakemailsubscriptionform';
         $name = 'CakeMail';
 
         parent::__construct(
@@ -37,13 +37,13 @@ class CakeMailSubscriptionWidget extends WP_Widget {
         }
 
         // Register style content
-        wp_register_style( 'cakemail-subscription-backend', plugins_url('cakemailsubscriptionwidget/css/cakemail_subscription_backend.css') );
-        wp_register_style( 'cakemail-subscription-frontend', plugins_url('cakemailsubscriptionwidget/css/cakemail_subscription_frontend.css') );
+        wp_register_style( 'cakemail-subscription-backend', plugins_url('cakemail-subscription-form/css/cakemail_subscription_backend.css') );
+        wp_register_style( 'cakemail-subscription-frontend', plugins_url('cakemail-subscription-form/css/cakemail_subscription_frontend.css') );
 
         // Register script content
-        wp_register_script( 'cakemail-base', plugins_url('cakemailsubscriptionwidget/js/cakemail_base.js') );
-        wp_register_script( 'cakemail-subscription-backend', plugins_url('cakemailsubscriptionwidget/js/cakemail_subscription_backend.js') );
-        wp_register_script( 'cakemail-subscription-frontend', plugins_url('cakemailsubscriptionwidget/js/cakemail_subscription_frontend.js') );
+        wp_register_script( 'cakemail-base', plugins_url('cakemail-subscription-form/js/cakemail_base.js') );
+        wp_register_script( 'cakemail-subscription-backend', plugins_url('cakemail-subscription-form/js/cakemail_subscription_backend.js') );
+        wp_register_script( 'cakemail-subscription-frontend', plugins_url('cakemail-subscription-form/js/cakemail_subscription_frontend.js') );
     }
 
     /**
@@ -271,11 +271,11 @@ class CakeMailSubscriptionWidget extends WP_Widget {
 } // class Cakemail
 
 add_action('widgets_init',
-     create_function('', 'return register_widget("CakeMailSubscriptionWidget");')
+     create_function('', 'return register_widget("CakeMailSubscriptionForm");')
 );
 
 add_action( 'wp_ajax_get_fields', function(){
-    $widget = new CakeMailSubscriptionWidget($_POST['widget_index']);
+    $widget = new CakeMailSubscriptionForm($_POST['widget_index']);
 
     $instance = $widget->get_settings();
     $instance = $instance[$_POST['widget_index']];

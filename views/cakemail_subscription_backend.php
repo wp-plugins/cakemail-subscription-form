@@ -1,12 +1,13 @@
 <?php 
     $is_logged_id = $instance['registered'];
+    $error_code = 0;
 ?>
 
 <div class="cakemail" id="<?php echo $instance['widget_id']; ?>">
     <div class="header <?php echo $is_logged_id ? 'loggedin' : ''; ?>">
         <div class="username"><?php echo  $instance['user']->first_name . ' ' . $instance['user']->last_name; ?></div>
         <div class="company"><?php echo $instance['client']->company_name ?></div>
-        <img class="logo"  src="<?php echo plugins_url('cakemailsubscriptionwidget/img/logo_cake_wp.png'); ?>" />
+        <img class="logo"  src="<?php echo plugins_url('cakemail-subscription-form/img/logo_cake_wp.png'); ?>" />
     </div>
 
     <!-- TITLE -->
