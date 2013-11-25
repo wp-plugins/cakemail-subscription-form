@@ -1,0 +1,110 @@
+.cakemail-box {
+  background: #fff;
+
+  box-shadow:0 1px 2px rgba(0,0,0,.2);
+  border-radius:0 0 10px 10px;
+  color:#111;
+  
+  font-family: Helvetica, Arial, 'Lucida Grande', sans-serif;
+  font-size:16px;
+
+  outline: none;
+}
+
+.cakemail-box a {
+  color:#ED006F;
+}
+
+.content {
+  padding:10px;
+}
+
+.cakemail-box input[type="text"] {
+  margin-top:10px;
+  
+  -webkit-appearance: none;
+  color:#999;
+  border:1px solid #ddd;
+  padding:10px;
+  outline: none;
+  
+  width:90%;
+  
+  border-radius:3px;
+  
+  font-family: Helvetica, Arial, 'Lucida Grande', sans-serif;
+  font-size:14px;
+}
+
+.cakemail-box input[type="text"]:focus {
+  border:1px solid #B3D4FD;
+  box-shadow:0 0 3px #B3D4FD;
+  outline: none;
+  color:#111;
+}
+
+.cakemail-box .email[disabled] {
+  background: #f7f7f7;
+  opacity:.75;
+}
+
+.cakemail-box nput[type="text"].error {
+  border: solid 1px #ff0000;
+  box-shadow: 0 0 3px #ff0000;
+}
+
+.cakemail-box .block-button {
+  -webkit-appearance: none;
+  float: none;
+  margin:10px 0;
+  border-radius:3px;
+  padding:8px 15px 8px;
+  outline: none;
+  min-width: 85px;
+}
+
+.cakemail-box .block-button:active {
+  box-shadow:inset 0 1px 4px #002854;
+  opacity: .5;
+}
+
+.cakemail-box .block-button[disabled] {
+  box-shadow:inset 0 1px 4px #666;
+  opacity: .5;
+  cursor: default;
+}
+
+.cakemail-box label {
+  font-size: 12px;
+  margin-top: 11px;
+  display: inline-block;
+}
+
+.cakemail-box input.with-label {
+  margin-top: 5px
+}
+
+.cakemail-box .error-box {
+  margin-top: 10px;
+  border: solid 1px #f00;
+  padding: 5px;
+  font-size: 12px;
+  color: #f00;
+  border-radius: 3px;
+  display: none;
+}
+
+.cakemail-box .cake_confirmation_message {
+  display: none;
+}
+
+.cakemail-box .powered {
+  background-image: url("/wp-content/plugins/cakemail-subscription-widget/img/logo_16.png");
+  background-repeat: no-repeat;
+  font-size: 9px;
+  padding-left: 20px;
+  margin-top:20px;
+  margin-bottom:0;
+  position:relative;
+  bottom:0;
+}

@@ -1,0 +1,191 @@
+div.widget div.widget-inside {
+    background-color: #fcfcfc;
+    padding: 0 0 10px;
+}
+div.widget div.widget-control-actions {
+    margin: 10px 15px 0;
+}
+div.cakemail {
+    font-family: Helvetica,Arial,sans-serif;
+}
+/*** HEADER */
+div.cakemail div.header {
+    height: 85px;
+    width: 250px;
+    background-color: #ebd8c0;
+    position: relative;
+}
+div.cakemail div.header.loggedin {
+    height: 75px;
+}
+div.cakemail div.header img {
+    position: absolute;
+}
+div.cakemail div.header img.logo {
+    top: 15px;
+    left: 90px;
+}
+div.cakemail div.header.loggedin img.logo {
+    top: 13px;
+    left: 10px;
+    height: 50px;
+}
+div.cakemail div.header img.gravatar {
+    display: none;
+}
+div.cakemail div.header.loggedin img.gravatar {
+    display: block;
+    top: 5px;
+    right: 5px;
+    height: 25px;
+    border-radius: 25px;
+}
+div.cakemail div.header div,
+div.cakemail div.header a.logout {
+    display: none;
+}
+div.cakemail div.header.loggedin div,
+div.cakemail div.header.loggedin a.logout {
+    display: block;
+}
+div.cakemail div.header.loggedin div {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-family: 'Din',"Helvetica Neue",Helvetica,Arial,sans-serif;
+    margin-left: 60px;
+}
+div.cakemail div.header.loggedin div.username {
+    color: #52422f;
+    font-size: 14px;
+    padding-top: 25px;
+    width: 185px;
+}
+div.cakemail div.header.loggedin div.company {
+    color: #ab9379;
+    font-size: 12px;
+    width: 185px;
+}
+div.cakemail div.header.loggedin a.logout {
+    color: #ab9379;
+    font-size: 10px;
+    position: absolute;
+    top: 32px;
+    right: 5px;
+}
+/*** SECTION */
+div.cakemail div.section {
+}
+    /* title */
+div.cakemail div.section div.title {
+    background-color: #ffffff;
+    border-bottom: solid 1px #d7d7d7;
+    padding: 7px 15px;
+}
+div.cakemail div.section div.title.prev_open,
+div.cakemail div.section div.title.first {
+    border-top: solid 1px #d7d7d7;
+}
+div.cakemail div.section.collapsable div.title {
+    display: block;
+    cursor: pointer;
+}
+div.cakemail div.section div.title div.label {
+    font-weight: bold;
+    white-space: nowrap;
+    width: 205px;
+    display: inline-block;
+}
+div.cakemail div.section div.title div.arrow {
+    width: 0;
+    height: 0;
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+    display: inline-block;
+}
+div.cakemail div.section div.title div.arrow {
+    border-bottom: none;
+    border-top: 4px solid #999999;
+}
+div.cakemail div.section div.title.open div.arrow {
+    border-bottom: 4px solid #999999;
+    border-top: none;
+}
+    /* form */
+div.cakemail div.form {
+    padding: 15px;
+    border-bottom: solid 1px #d7d7d7;
+}
+div.cakemail div.form label {
+    display: inline-block;
+    margin-bottom: 5px;
+    margin-top: 5px;
+    margin-left: 5px;
+}
+div.cakemail div.form input[type="text"],
+div.cakemail div.form textarea {
+    color:#343434;
+    padding: 5px 5px 5px 10px;
+    border:1px solid #dddddd;  
+    border-radius: 4px;  
+    margin-bottom: 10px;
+    width: 100%; 
+    resize:none;
+}
+div.cakemail div.form textarea {
+    height: 60px;
+}
+div.cakemail div.form input[type="checkbox"] {
+    display: inline-block;
+    margin-top: 6px;
+    margin-left: 4px;
+    float: left;
+}
+div.cakemail div.form select {
+    height: 25px;
+}
+div.cakemail div.form div.noaccount {
+    padding-top: 20px;
+}
+div.cakemail div.form input.powered_check {
+    margin-top: 8px;
+}
+div.cakemail div.form p.powered_message {
+   margin-left: 25px; 
+}
+    /* fields */
+div.cakemail div.form ul.fields-container {
+    margin-top: 15px;
+}
+div.cakemail div.form ul.fields-container li {
+    background-color: #fafafa;
+    border-radius: 4px;
+    padding: 5px 5px 0 0;
+    border: solid 1px #ddd;
+}
+div.cakemail div.form ul.fields-container li.drag-disabled {
+    background-color: #ffffff;
+    border: solid 1px #f0f0f0;
+}
+div.cakemail div.form ul.fields-container li.drag-disabled * {
+    opacity: 0.35;
+}
+div.cakemail div.form ul.fields-container li.drag-disabled input[type="checkbox"] {
+    opacity: 1;
+}
+div.cakemail div.form ul.fields-container img.drag-icon {
+    cursor: move;
+    float: right;
+
+}
+div.cakemail div.form ul.fields-container li.drag-disabled img.drag-icon {
+    cursor: default;
+}
+div.cakemail div.form ul.fields-container input[type="text"] {
+    margin-left: 20px;
+    width: 190px;
+}
+/**/
+div.cakemail .hidden {
+    display: none!important;
+}
