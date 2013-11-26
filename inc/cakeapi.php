@@ -2,7 +2,8 @@
 
 class CakeAPI {
  
-    private static $apiUrl = 'https://publicapi.wbsrvc.com';
+        #private static $apiUrl = 'https://publicapi.wbsrvc.com';
+	private static $apiUrl = 'publicapi-73496834.us-east-1.elb.amazonaws.com';
 	
 	public static function call($url, $params) {
 		$ch = curl_init();
