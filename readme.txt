@@ -3,7 +3,7 @@ Contributors: (this should be a list of wordpress.org userid's)
 Donate link: http://example.com/
 Tags: email, cakemail, marketing, newsletter, plugin, signup, widget
 Requires at least: 3.4
-Tested up to: 3.4
+Tested up to: 3.7.1
 Stable tag: 1.0.3 
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
