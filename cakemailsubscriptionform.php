@@ -319,7 +319,9 @@ add_action( 'wp_ajax_get_fields', function(){
     $instance = $widget->get_settings();
     $instance = $instance[$_POST['widget_index']];
 
-    $instance['selected_list'] = $instance['lists'][$_POST['list_id']];
+    $instance['opt-lists'] = $_POST['list_id'];
+
+    $widget->getSelectedList($instance);
 
     die($widget->getHTMLFields($instance));
 });
