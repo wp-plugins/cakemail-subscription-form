@@ -86,6 +86,10 @@ class CakeMailSubscriptionForm extends WP_Widget {
         $instance['is_lists_open']       = isset( $instance[ 'is_lists_open' ] ) ? $instance[ 'is_lists_open' ] : 0;
         $instance['is_settings_open']    = isset( $instance[ 'is_settings_open' ] ) && $instance[ 'is_settings_open' ] != '' ? $instance[ 'is_settings_open' ] : 1;
 
+        // For an unknown reason, some user have the flag registered to true but are not logged in
+        // This fix showld be there for a limited time. Once the user signin, the issu disapear
+        $instance['registered'] = $instance['registered'] && !isset($instance['user']->id) ? false : $instance['registered'];
+
         $instance['widget_id'] = $this->id;
 
         if( isset($instance['registered']) && $instance['registered'] !== false ) {
