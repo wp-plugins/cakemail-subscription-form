@@ -72,7 +72,7 @@ CakeMail.Subscription.Widget = function( el ) {
     }
 
     var get_field_id = function( $name ) {
-        return "#widget-cakemailsubscriptionwidget-" + me.index + "-" + $name;
+        return "#widget-cakemailsubscriptionform-" + me.index + "-" + $name;
     }
 
     constructor();

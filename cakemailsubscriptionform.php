@@ -55,8 +55,8 @@ class CakeMailSubscriptionForm extends WP_Widget {
      * @param array $instance Saved values from database.
      */
     public function widget( $args, $instance ) {
-        if( !isset($instance['user']) )
-            return FALSE;
+        if( !$instance['registered'] )
+            return false;
 
         wp_enqueue_script('jquery');
         wp_enqueue_script('jquery-ui-core');
@@ -82,22 +82,18 @@ class CakeMailSubscriptionForm extends WP_Widget {
         $instance['description']         = isset( $instance[ 'description' ] ) ? $instance[ 'description' ] : __('Subscribe to our newsletter!','cakemail-subscription-widget');
         $instance['confirmationmessage'] = isset( $instance[ 'confirmationmessage' ] ) ? $instance[ 'confirmationmessage' ] : __('We just sent you an email that you need to click on before you get added to the list','cakemail-subscription-widget');
         $instance['submit_txt']          = isset( $instance[ 'submit_txt' ] ) ? $instance[ 'submit_txt' ] : __('Subscribe','cakemail-subscription-widget');
-        $instance['registered']          = isset( $instance[ 'registered' ] ) ? $instance[ 'registered' ] : false;
+        $instance['registered']          = isset($instance[ 'registered' ]) ? ($instance[ 'registered' ] !== true ? false : true) : false;
         $instance['is_lists_open']       = isset( $instance[ 'is_lists_open' ] ) ? $instance[ 'is_lists_open' ] : 0;
         $instance['is_settings_open']    = isset( $instance[ 'is_settings_open' ] ) && $instance[ 'is_settings_open' ] != '' ? $instance[ 'is_settings_open' ] : 1;
 
         $instance['widget_id'] = $this->id;
 
-        if( $instance['registered'] ) {
-            $instance['lists'] = $this->getLists( $instance['user']->user_key );
-
-            if(!isset($instance['selected_list']) || $instance['selected_list'] == null)
-                $instance['selected_list'] = reset($instance['lists']);
+        if( isset($instance['registered']) && $instance['registered'] !== false ) {
+            $this->getLists($instance);
         }
 
         wp_enqueue_script('cakemail-base');
         wp_enqueue_script('cakemail-subscription-backend');
-
         wp_enqueue_style( 'cakemail-subscription-backend' );
  
         include dirname(__FILE__) . '/views/cakemail_subscription_backend.php';
@@ -118,58 +114,25 @@ class CakeMailSubscriptionForm extends WP_Widget {
     public function update( $new_instance, $old_instance )
     {
         $instance = $new_instance;
-
         $instance['error_code'] = 0;
 
-        // Get User information
-        if( $instance['username'] != '' && ( isset($instance['password']) && $instance['password'] != '' ) ) {
-            $instance['user'] = $this->getUser( $instance );
-            if( isset($instance['user']) && $instance['user'] ) {
-                $instance['registered'] = true;
-            }
-            $instance['client'] = $this->getClient($instance['user']->user_key);
+        if( (isset($instance['password']) && $instance['password'] != '') ) {
+            $this->loginUser($instance);
         }
         else {
-	    $instance['user'] = $old_instance['user'];
-            $instance['client'] = $old_instance['client'];
-            $instance['registered'] = $old_instance['registered'];  
+            $instance['user'] = isset($old_instance['user']) ? $old_instance['user'] : null; 
+            $instance['registered'] = isset($old_instance['registered']) ? $old_instance['registered'] : false;
         }
 
-        // Get Lists
-        if( isset( $instance['user'] ) ) {
-            $instance['lists'] = $this->getLists( $instance['user']->user_key );
-
-            if($instance['opt-lists'])
-                $instance['selected_list'] = $instance['lists'][$instance['opt-lists']];
-            else
-                $instance['selected_list'] = reset($instance['lists']);
-
-            foreach ($instance['lists'][$instance['opt-lists']]->fields as $name => $values) {
-                $field = $instance['lists'][$instance['opt-lists']]->fields[$name];
-
-                $field['label'] = $instance['field-'.$name];
-                $field['show']  = $instance['field-chk-'.$name] == on ? true : $name == 'email' ? true : false;
-                $field['index'] = $instance['field-chk-index-'.$name]; 
-
-               $instance['lists'][$instance['opt-lists']]->fields[$name] = $field;
-            }
-            uasort($instance['lists'][$instance['opt-lists']]->fields, "self::sortByFieldOrder");
+        if( $instance['registered'] ) {
+            $this->getUser($instance);
+            $this->getClient($instance);
+            $this->getLists($instance);
         }
-        else
-            $instance['selected_list'] = reset($instance['lists']);
-
-        update_option('cakemail_subscription_widget_'.$this->id.'_lists', $instance['lists']);
 
         $instance['widget_id'] = $this->id;
 
         unset( $instance['password'] );
-
-        if ($instance['error_code'] != 0)
-        {
-            unset( $instance['user'] );
-            unset( $instance['lists'] );
-            unset( $instance['selected_list'] );
-        }
 
         return $instance;
     }
@@ -184,6 +147,27 @@ class CakeMailSubscriptionForm extends WP_Widget {
         return ob_get_clean();
     }
 
+   /**
+     * Login the user
+     *
+     * @param array &$instance Values just sent to be saved.
+     *
+     */
+    private function loginUser( &$instance )
+    {
+        $instance['registered'] = false;
+        $instance['user'] = CakeAPI::getLogin($instance['username'], $instance['password']);
+
+        if(!$instance['user']) {
+            $instance['error_code'] = 1;
+            return false;
+        }
+
+        $instance['registered'] = true;
+
+        return $instance['user'];
+    }
+
     /**
      * Retrieve user information.
      *
@@ -193,27 +177,25 @@ class CakeMailSubscriptionForm extends WP_Widget {
      */
     private function getUser( &$instance )
     {
-        if(!$instance['registered']) {
-            unset( $instance['user'] );
-            $user = CakeAPI::getLogin($instance['username'], $instance['password']);
-        }
-        $user = CakeAPI::getUser($user->user_key, $user->id);
-        $user->gravatar = 'https://www.gravatar.com/avatar/' . md5(strtolower(trim($user->email)));
+        $instance['user'] = CakeAPI::getUser($instance['user']->user_key, $instance['user']->user_id);
 
-        return $user;
+        $instance['user']->user_id = $instance['user']->id;
+        $instance['user']->gravatar = 'https://www.gravatar.com/avatar/' . md5(strtolower(trim($instance['user']->email)));
+
+        return $instance['user'];
     }
 
     /**
-     * Retrieve company information.
+     * Retrieve client information.
      *
      * @param array &$instance Values just sent to be saved.
      *
      * @return bool Is the process completed successfully.
      */
-    private function getClient( $user_key )
+    private function getClient( &$instance )
     {
-        unset( $instance['user'] );
-        return CakeAPI::getClient($user_key);
+        $instance['client'] = CakeAPI::getClient($instance['user']->user_key);
+        return $instance['client'];
     }
 
     /**
@@ -223,41 +205,94 @@ class CakeMailSubscriptionForm extends WP_Widget {
      *
      * @return bool Is the process completed successfully.
      */
-    private function getLists( $user_key )
+    private function getLists( &$instance )
     {
-        $lists = array();
-        $obj = CakeAPI::getLists($user_key);
+        $this->refreshLists($instance);
+        $this->getSelectedList($instance);
 
-        $saved_lists = get_option('cakemail_subscription_widget_'.$this->id.'_lists', array());
+        update_option('cakemail_subscription_widget_'.$this->id.'_lists', $instance['lists']);
 
-        foreach ($obj->lists as $id => $list) {
-            $lists[$list->id] = $list;
-            $lists[$list->id]->fields = (array)$this->getFields($user_key, $list->id);
-            foreach ($lists[$list->id]->fields as $name => $values) {
-                $exists = isset($saved_lists[$list->id]) && isset($saved_lists[$list->id]->fields[$name]) ? $saved_lists[$list->id]->fields[$name] : false;
-                $lists[$list->id]->fields[$name] = array(
-                    'type' =>  $lists[$list->id]->fields[$name],
-                    'show' =>  $exists ? $exists['show']  : 0,
-                    'label' => $exists ? $exists['label'] : '',
-                    'index' => $exists ? $exists['index'] : 9999,
-                ); 
-            }
-        }
-        update_option('cakemail_subscription_widget_'.$this->id.'_lists', $lists);
-
-        return $lists;
+        return $instance['lists'];
     }
 
     /**
-     * Retrieve fields list.
+     * Refresh list with saved data subscribers lists.
      *
      * @param array &$instance Values just sent to be saved.
      *
-     * @return bool Is the process completed successfully.
      */
-    private function getFields( $user_key, $list_id )
+    private function refreshLists( &$instance )
     {
-        return CakeAPI::getFields($user_key, $list_id);
+        $lists = CakeAPI::getLists($instance['user']->user_key);
+
+        // If the user has no list, just create one
+        if( count($lists->lists) == 0 ){
+            $this->createList($instance);
+            $lists = CakeAPI::getLists($instance['user']->user_key);
+        }
+
+        $instance['lists'] = array();
+
+        foreach ($lists->lists as $id => $list) {
+            $this->refreshFields($instance, $list);
+        }
+
+        return $instance['lists'];
+    }
+
+    /**
+     * Creates subscribers lists.
+     *
+     * @param array &$instance Values just sent to be saved.
+     *
+     */
+    private function createList( $instance )
+    {
+        $listCreateParams = array(
+            'user_key'     => $instance['user']->user_key,
+            'name'         => 'Wordpress Default List',
+            'sender_name'  => $instance['user']->first_name . " " . $instance['user']->last_name,
+            'sender_email' => $instance['user']->email,
+            'list_policy'  => 'accepted',
+            'list_setup'   => 'true'
+        );
+
+        return CakeAPI::createList($listCreateParams);
+    }
+
+    /**
+     *
+     */
+    private function refreshFields( &$instance, $list )
+    {
+        $list->fields = array();
+        $instance['lists'][$list->id] = $list;
+
+        foreach ((array)CakeAPI::getFields($instance['user']->user_key, $list->id) as $name => $values) {
+            $list->fields[$name] = array( 'type' =>  $values ); 
+        }
+    }
+
+    private function getSelectedList( &$instance )
+    {
+        $instance['selected_list'] = isset($instance['opt-lists']) && $instance['opt-lists'] !== '' && isset($instance['lists'][$instance['opt-lists']]) 
+            ? $instance['lists'][$instance['opt-lists']] 
+            : reset($instance['lists']);
+
+        foreach ($instance['selected_list']->fields as $name => $values) {
+            $show = isset($instance['field-chk-'.$name]) && $instance['field-chk-'.$name] == 'on' ? true : $name == 'email' ? true : false;
+            $label = isset($instance['field-'.$name]) ? $instance['field-'.$name] : "";
+            $index = isset($instance['field-chk-index-'.$name]) && $instance['field-chk-index-'.$name] != "" ? $instance['field-chk-index-'.$name] : 999 - $show;
+
+            $instance['selected_list']->fields[$name]['show'] = $show;
+            $instance['selected_list']->fields[$name]['label'] = $label;
+            $instance['selected_list']->fields[$name]['index'] = $index;
+        }
+
+        uasort($instance['selected_list']->fields, "self::sortByFieldOrder");
+        $instance['lists'][$instance['selected_list']->id] = $instance['selected_list'];
+
+        return $instance['selected_list'];
     }
 
     /**

@@ -1,13 +1,16 @@
 <?php 
     $is_logged_id = $instance['registered'];
-    $error_code = 0;
+    $instance['error_code'] = isset($instance['error_code']) ? $instance['error_code'] : 0;
 ?>
 
 <div class="cakemail" id="<?php echo $instance['widget_id']; ?>">
+    <input type="hidden" id="<?php echo $this->get_field_id( 'registered' ); ?>" name="<?php echo $this->get_field_name( 'registered' ); ?>"  value="<?php echo $instance['registered']; ?>" />
     <div class="header <?php echo $is_logged_id ? 'loggedin' : ''; ?>">
-        <div class="username"><?php echo  $instance['user']->first_name . ' ' . $instance['user']->last_name; ?></div>
-        <div class="company"><?php echo $instance['client']->company_name ?></div>
-        <img class="logo"  src="<?php echo plugins_url('cakemail-subscription-form/img/logo_cake_wp.png'); ?>" />
+        <?php if($instance['registered']) { ?>
+        <div class="username"><?php echo $instance['user']->first_name . ' ' . $instance['user']->last_name; ?></div>
+        <div class="company"><?php echo $instance['client']->company_name; ?></div>
+        <?php } ?>
+        <img class="logo" src="<?php echo plugins_url('cakemail-subscription-form/img/logo_cake_wp.png'); ?>" />
     </div>
 
     <!-- TITLE -->
@@ -19,10 +22,10 @@
 
         <div class="form <?php echo $is_logged_id ? 'hidden' : ''; ?>">
             <label for="<?php echo $this->get_field_id( 'username' ); ?>"><?php echo __('Email','cakemail-subscription-widget') ?></label>
-            <input class="widefat<?php echo $error_code==1 ? " form_error" : "" ?>" id="<?php echo $this->get_field_id( 'username' ); ?>" name="<?php echo $this->get_field_name( 'username' ); ?>" type="text" value="<?php echo $instance['username']; ?>" />
+            <input class="widefat<?php echo $instance['error_code']==1 ? " error" : "" ?>" id="<?php echo $this->get_field_id( 'username' ); ?>" name="<?php echo $this->get_field_name( 'username' ); ?>" type="text" value="<?php echo $instance['username']; ?>" />
 
             <label for="<?php echo $this->get_field_id( 'password' ); ?>"><?php echo __('Password','cakemail-subscription-widget') ?></label>
-            <input class="widefat<?php echo $error_code==1 ? " form_error" : "" ?>" id="<?php echo $this->get_field_id( 'password' ); ?>" name="<?php echo $this->get_field_name( 'password' ); ?>" type="password" value="" />
+            <input class="widefat<?php echo $instance['error_code']==1 ? " error" : "" ?>" id="<?php echo $this->get_field_id( 'password' ); ?>" name="<?php echo $this->get_field_name( 'password' ); ?>" type="password" value="" />
 
             <div class="noaccount<?php echo $is_logged_id ? " hidden" : ""; ?>">
                 <p><?php echo __('Don\'t have a CakeMail account?','cakemail-subscription-widget') ?> <a target="_blank" href="http://www.cakemail.com"><?php echo __('Create an account','cakemail-subscription-widget') ?></a></p>

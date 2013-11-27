@@ -123,6 +123,7 @@ div.cakemail div.form label {
     margin-left: 5px;
 }
 div.cakemail div.form input[type="text"],
+div.cakemail div.form input[type="password"],
 div.cakemail div.form textarea {
     color:#343434;
     padding: 5px 5px 5px 10px;
@@ -131,6 +132,10 @@ div.cakemail div.form textarea {
     margin-bottom: 10px;
     width: 100%; 
     resize:none;
+}
+div.cakemail div.form input[type="text"].error,
+div.cakemail div.form input[type="password"].error {
+    border-color:#f00;
 }
 div.cakemail div.form textarea {
     height: 60px;
