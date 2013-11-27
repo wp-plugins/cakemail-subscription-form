@@ -277,7 +277,7 @@ class CakeMailSubscriptionForm extends WP_Widget {
         }
     }
 
-    private function getSelectedList( &$instance )
+    public function getSelectedList( &$instance )
     {
         $instance['selected_list'] = isset($instance['opt-lists']) && $instance['opt-lists'] !== '' && isset($instance['lists'][$instance['opt-lists']]) 
             ? $instance['lists'][$instance['opt-lists']] 
