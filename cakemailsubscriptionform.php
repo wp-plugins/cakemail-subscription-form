@@ -55,7 +55,7 @@ class CakeMailSubscriptionForm extends WP_Widget {
      * @param array $instance Saved values from database.
      */
     public function widget( $args, $instance ) {
-        if( !$instance['registered'] )
+        if( !$instance['registered'] || !$instance['selected_list'] )
             return false;
 
         wp_enqueue_script('jquery');
