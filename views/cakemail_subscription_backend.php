@@ -64,7 +64,7 @@
     <div class="section collapsable <?php echo !$is_logged_id ? 'hidden' : ''; ?>">
         <input type="hidden" id="<?php echo $this->get_field_id( 'is_lists_open' ); ?>" name="<?php echo $this->get_field_name( 'is_lists_open' ); ?>" value="<?php echo $instance['is_lists_open']; ?>" />
         <div class="title<?php echo $instance['is_lists_open'] ? ' open' : ''; ?>" id="lists">
-            <div class="label"><?php echo __('Subscribers lists','cakemail-subscription-widget') ?></div>
+            <div class="label"><?php echo __('Contact lists','cakemail-subscription-widget') ?></div>
             <div class="arrow"></div>
         </div>
 
@@ -84,7 +84,7 @@
                 </ul>
 
                 <input id="<?php echo $this->get_field_id( 'show_label' ); ?>" name="<?php echo $this->get_field_name( 'show_label' ); ?>" type="checkbox" <?php echo isset($instance['show_label']) && $instance['show_label'] == 'on' ? 'checked="checked"' : ''; ?>/>
-                <label for="<?php echo $this->get_field_id( 'show_label' ); ?>"><?php echo __('Show fields label','cakemail-subscription-widget') ?></label>
+                <label for="<?php echo $this->get_field_id( 'show_label' ); ?>"><?php echo __('Place title above field','cakemail-subscription-widget') ?></label>
 
                 <input class="fields-sorted" name="<?php echo $this->get_field_name( 'fields-sorted' ); ?>" id="<?php echo $this->get_field_id( 'fields-sorted' ); ?>" type="hidden" value="0" />
             <?php } ?>

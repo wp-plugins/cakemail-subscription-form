@@ -82,7 +82,7 @@ class CakeMailSubscriptionForm extends WP_Widget {
         $instance['description']         = isset( $instance[ 'description' ] ) ? $instance[ 'description' ] : __('Subscribe to our newsletter!','cakemail-subscription-widget');
         $instance['confirmationmessage'] = isset( $instance[ 'confirmationmessage' ] ) ? $instance[ 'confirmationmessage' ] : __('We just sent you an email that you need to click on before you get added to the list','cakemail-subscription-widget');
         $instance['submit_txt']          = isset( $instance[ 'submit_txt' ] ) ? $instance[ 'submit_txt' ] : __('Subscribe','cakemail-subscription-widget');
-        $instance['registered']          = isset($instance[ 'registered' ]) ? ($instance[ 'registered' ] !== true ? false : true) : false;
+        $instance['registered']          = isset( $instance[ 'registered' ]) ? ($instance[ 'registered' ] !== true ? false : true) : false;
         $instance['is_lists_open']       = isset( $instance[ 'is_lists_open' ] ) ? $instance[ 'is_lists_open' ] : 0;
         $instance['is_settings_open']    = isset( $instance[ 'is_settings_open' ] ) && $instance[ 'is_settings_open' ] != '' ? $instance[ 'is_settings_open' ] : 1;
 
