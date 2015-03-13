@@ -10,9 +10,7 @@ Author URI: http://www.cakemail.com
 
 error_reporting( E_ALL );
 
-require_once ( dirname(__FILE__) . '/inc/request.php' );
 require_once ( dirname(__FILE__) . '/inc/cakeapi.php' );
-#require_once ( dirname(__FILE__) . '/inc/ajaxcallbacks.php' );
 
 /**
  * Adds Cakemail widget.

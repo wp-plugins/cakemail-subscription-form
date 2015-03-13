@@ -7,7 +7,7 @@
   <div class="content cake_subscription_form" id="cake_subscription_form_<?php echo $instance['selected_list']->id; ?>">
     <div class="title"><?php echo $instance['description']; ?></div>
 
-    <div class="error-box">asdf</div>
+    <div class="error-box"></div>
 
     <div id="<?php echo $this->get_field_id( 'form' ); ?>">
       <?php foreach ( $instance['selected_list']->fields as $field => $values ) { ?>

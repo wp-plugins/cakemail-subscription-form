@@ -1,5 +1,4 @@
 <?php
-require_once ( dirname(__FILE__) . '/inc/request.php' );
 require_once ( dirname(__FILE__) . '/inc/cakeapi.php' );
 
 $user_key = $_POST['user_key']; unset($_POST['user_key']);
@@ -15,7 +14,7 @@ $params = array(
 
 try{
     CakeAPI::call('/List/SubscribeEmail/', $params);
-    echo 1;   
+    echo 1;
 }
 catch(exception $e){
     echo $e;
